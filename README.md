@@ -8,6 +8,8 @@ of known not-interesting products with the **Jaccard similarity** of their words
 least 70% similar to something in the list, it is rejected — and added to the list, so the filter keeps
 growing from what it sees.
 
+![How it works](docs/how-it-works.svg)
+
 ## Use
 
 ```bash
@@ -29,6 +31,11 @@ good = f.select(offers)                            # returns the keepers, learns
 ```
 
 Plug `is_interesting()` into your bot right before sending an offer.
+
+On the sample offers it keeps the tech deals and filters out fashion, beauty and jewellery — each bar is
+an offer's similarity to the not-interesting list, and anything past the 0.70 line is dropped:
+
+![Similarity of sample offers](docs/similarity.png)
 
 ## Files
 

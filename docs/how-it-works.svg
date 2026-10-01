@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 300" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="940" height="300" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <!-- boxes -->
+  <g fill="#f8fafc" stroke="#cbd5e1">
+    <rect x="24"  y="120" width="120" height="60" rx="10"/>
+    <rect x="196" y="120" width="120" height="60" rx="10"/>
+    <rect x="368" y="110" width="160" height="80" rx="10"/>
+  </g>
+  <!-- decision -->
+  <polygon points="620,150 688,110 756,150 688,190" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <!-- outcomes -->
+  <rect x="800" y="40"  width="120" height="60" rx="10" fill="#dcfce7" stroke="#16a34a"/>
+  <rect x="800" y="200" width="120" height="60" rx="10" fill="#fee2e2" stroke="#dc2626"/>
+
+  <!-- labels -->
+  <g fill="#1f2937" font-size="15" text-anchor="middle">
+    <text x="84"  y="155">📦 Offer</text>
+    <text x="256" y="147">Tokenize</text>
+    <text x="256" y="167" font-size="12" fill="#64748b">(words)</text>
+    <text x="448" y="144">Jaccard vs</text>
+    <text x="448" y="163">not-interesting</text>
+    <text x="448" y="181" font-size="12" fill="#64748b">list</text>
+    <text x="688" y="146">≥ 70%</text>
+    <text x="688" y="164">similar?</text>
+    <text x="860" y="66" fill="#166534">✅ Keep</text>
+    <text x="860" y="86" font-size="12" fill="#166534">post to channel</text>
+    <text x="860" y="226" fill="#991b1b">❌ Reject</text>
+    <text x="860" y="246" font-size="12" fill="#991b1b">add to the list</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#64748b" stroke-width="2" fill="none">
+    <line x1="144" y1="150" x2="190" y2="150" marker-end="url(#arrow)"/>
+    <line x1="316" y1="150" x2="362" y2="150" marker-end="url(#arrow)"/>
+    <line x1="528" y1="150" x2="614" y2="150" marker-end="url(#arrow)"/>
+    <path d="M756,135 C782,110 782,80 794,72" marker-end="url(#arrow)"/>
+    <path d="M756,165 C782,190 782,220 794,228" marker-end="url(#arrow)"/>
+  </g>
+  <text x="774" y="108" font-size="12" fill="#64748b">no</text>
+  <text x="770" y="205" font-size="12" fill="#64748b">yes</text>
+
+  <!-- learning loop: rejected feeds back into the list -->
+  <path d="M800,230 C560,290 520,250 448,194" stroke="#dc2626" stroke-width="2" fill="none"
+        stroke-dasharray="5 4" marker-end="url(#arrowDashed)"/>
+  <text x="590" y="285" font-size="12" fill="#dc2626">learns: the rejected offer joins the list</text>
+</svg>
