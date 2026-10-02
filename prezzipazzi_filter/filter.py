@@ -4,7 +4,7 @@ An offer is considered *not interesting* when its text is similar enough to one
 already in the "not interesting" list. Similarity is the Jaccard index between
 the two sets of word tokens; above `threshold` (0.70 by default) the offer is
 rejected. Rejected offers are added back to the list, so the filter keeps
-growing from what it sees — a simple instance-based (k-nearest-neighbour) model.
+growing from what it sees, a simple instance-based (k-nearest-neighbour) model.
 
 Keep a human in the loop: review what gets auto-added now and then, so the list
 stays true to your taste instead of drifting.
