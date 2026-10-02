@@ -1,11 +1,11 @@
 # prezzipazzi-filter
 
-A small tool that filters Amazon offers before they are posted to a Telegram deals channel, dropping the
-ones that look uninteresting (fashion, beauty, jewellery, gadgets…).
+A small tool that filters Amazon offers before they go out to a Telegram deals channel, dropping the
+ones that aren't worth posting (fashion, beauty, jewellery, random gadgets and so on).
 
-It is a simple **instance-based (k-nearest-neighbour) filter**: each offer's text is compared to a list
-of known not-interesting products with the **Jaccard similarity** of their words. If an offer is at
-least 70% similar to something in the list, it is rejected — and added to the list, so the filter keeps
+It's a simple instance based filter (k nearest neighbour). Each offer's text is compared to a list of
+products you've marked as not interesting, using the Jaccard similarity of their words. If an offer is at
+least 70% similar to something in the list, it gets dropped and added to the list, so the filter keeps
 growing from what it sees.
 
 ![How it works](docs/how-it-works.svg)
@@ -13,45 +13,47 @@ growing from what it sees.
 ## Use
 
 ```bash
-# print the offers worth posting (input: a JSON array of strings or {title, description})
+# print the offers worth posting (input: a JSON array of strings, or of {title, description})
 python -m prezzipazzi_filter data/sample_offers.json
 
-# try it without modifying the list
+# try it without touching the list
 python -m prezzipazzi_filter data/sample_offers.json --no-learn
 ```
 
-In code:
+From Python:
 
 ```python
 from prezzipazzi_filter import OfferFilter
 
-f = OfferFilter("data/not_interesting.json")      # threshold defaults to 0.70
+f = OfferFilter("data/not_interesting.json")      # threshold is 0.70 by default
 keep, score = f.is_interesting("Echo Dot con Alexa, sconto 45%")
 good = f.select(offers)                            # returns the keepers, learns from the rest
 ```
 
-Plug `is_interesting()` into your bot right before sending an offer.
+Drop `is_interesting()` into your bot right before it sends an offer.
 
-On the sample offers it keeps the tech deals and filters out fashion, beauty and jewellery — each bar is
-an offer's similarity to the not-interesting list, and anything past the 0.70 line is dropped:
+On the sample offers it keeps the tech deals and throws out the fashion, beauty and jewellery. Each bar
+is how similar an offer is to the not interesting list, and anything past the 0.70 line gets dropped:
 
-![Similarity of sample offers](docs/similarity.png)
+![Similarity of the sample offers](docs/similarity.png)
 
 ## Files
 
-- `data/not_interesting.json` — the seed list of uninteresting products (edit it freely).
-- `prezzipazzi_filter/filter.py` — Jaccard similarity and the `OfferFilter`.
-- `prezzipazzi_filter/text.py` — tokeniser (lowercase, Italian stop-words removed).
+* `data/not_interesting.json` is the starting list of products to skip. Edit it however you like.
+* `prezzipazzi_filter/filter.py` has the Jaccard similarity and the `OfferFilter`.
+* `prezzipazzi_filter/text.py` is the tokeniser (lowercase, Italian stop words removed).
 
-## Tune it
+## Tuning
 
-- `--threshold 0.6` rejects more aggressively; `0.8` is stricter about what counts as "similar".
-- **Review what it learns.** Rejected offers are added automatically, so the list can drift over time.
-  Open `data/not_interesting.json` now and then and remove anything that slipped in wrongly.
+`--threshold 0.6` is more aggressive, `0.8` is stricter about what counts as similar.
+
+One thing to keep an eye on: rejected offers are added to the list automatically, so over time it can
+drift and start dropping things you'd actually want. Open `data/not_interesting.json` every now and then
+and take out anything that slipped in by mistake.
 
 ## Tests
 
-No runtime dependencies (standard library only).
+No external dependencies, just the standard library.
 
 ```bash
 pip install pytest
